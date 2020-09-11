@@ -29,7 +29,6 @@ let pokemonRepository = (function () {
     $(container).append(unOrderedList);
     $(button).on("click", function () {
       showDetails(pokemon);
-      console.log(pokemon);
     });
   }
 
@@ -79,22 +78,10 @@ let pokemonRepository = (function () {
         item.height = details.height;
         //item.type = details.types;
         item.types = [];
+        //Get the type names from the array
         details.types.forEach(function (typeItem) {
           item.types.push(typeItem.type.name);
         });
-        if (item.types.include("grass")) {
-          $(".modal").css("background-color", "green");
-        } else if (item.types.include("fire")) {
-          $(".modal").css("background-color", "red");
-        } else if (item.types.include("water")) {
-          $(".modal").css("background-color", "blue");
-        } else if (item.types.include("fire")) {
-          $(".modal").css("background-color", "red");
-        } else if (item.types.include("fire")) {
-          $(".modal").css("background-color", "red");
-        } else if (item.types.include("fire")) {
-          $(".modal").css("background-color", "red");
-        }
       })
       .catch(function (e) {
         console.error(e);
@@ -108,6 +95,11 @@ let pokemonRepository = (function () {
     let modal = $("<div class = 'modal'></div>");
     let pokemonName = $("<h1>" + pokemon.name + "</h1>");
     let pokemonTypes = $("<p>" + pokemon.types + "</p>");
+
+    //function to get the color for the background
+    let backGroundColor = modalBackgroundColor(pokemon);
+    $(modal).css("background-color", backGroundColor);
+
     let closeButton = $("<button class = 'close-button'>Close</button>");
 
     // Eventlistener to hide modal
@@ -131,6 +123,38 @@ let pokemonRepository = (function () {
     modalContainer.addClass("is_visible");
   }
 
+  function modalBackgroundColor(pokemon) {
+    let color = "";
+    if (pokemon.types.includes("grass" || "bug")) {
+      color = "green";
+    } else if (pokemon.types.includes("fire" || "dragon")) {
+      color = "red";
+    } else if (pokemon.types.includes("water")) {
+      color = "blue";
+    } else if (pokemon.types.includes("normal")) {
+      color = "gray";
+    } else if (pokemon.types.includes("poison")) {
+      color = "purple";
+    } else if (pokemon.types.includes("psychic")) {
+      color = "#f366b9";
+    } else if (pokemon.types.includes("electric")) {
+      color = "yellow";
+    } else if (pokemon.types.includes("fairy")) {
+      color = "light pink";
+    } else if (pokemon.types.includes("fighting")) {
+      color = "#d56723";
+    } else if (pokemon.types.includes("ground")) {
+      color = "#ab9842";
+    } else if (pokemon.types.includes("rock")) {
+      color = "#a38c21";
+    } else if (pokemon.types.includes("ice")) {
+      color = "light blue";
+    } else if (pokemon.types.includes("ghost")) {
+      color = "#7b62a3";
+    }
+    return color;
+  }
+
   //function to hide modal
 
   function hideModal() {
@@ -146,9 +170,10 @@ let pokemonRepository = (function () {
     }
   });
   //hide modal when user clicks outside the modal
-  $(modalContainer).click(function (e) {
-    var target = e.target;
-    if (target === modalContainer) {
+  $(window).click(function (e) {
+    var target = $(e.target);
+    let modal = $(".modal");
+    if (!target.is(modal)) {
       hideModal();
     }
   });
