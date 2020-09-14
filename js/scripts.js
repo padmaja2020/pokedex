@@ -24,7 +24,7 @@ let pokemonRepository = (function () {
     );
 
     let button = $(
-      '<button type = "button" class = " pokemon-name list-group-item list-group-action text-capitalize " data-toggle = "modal" data-target = "#modal-container">' +
+      '<button type = "button" id = "myUL" class = " pokemon-name list-group-item list-group-action text-capitalize " data-toggle = "modal" data-target = "#modal-container">' +
         pokemon.name +
         "</button>"
     );
@@ -183,3 +183,22 @@ pokemonRepository.loadList().then(function () {
     pokemonRepository.addListItem(pokemon);
   });
 });
+function myFunction() {
+  var input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById("myInput");
+  console.log(input.value);
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("myUL");
+  console.log(ul);
+  //li = ul.getElementsByTagName("li");
+  for (i = 0; i < ul.length; i++) {
+    a = getElementsByTagName("button")[0];
+    console.log(a);
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      a[i].style.display = "";
+    } else {
+      a[i].style.display = "none";
+    }
+  }
+}
