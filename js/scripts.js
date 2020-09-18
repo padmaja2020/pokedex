@@ -16,22 +16,19 @@ let pokemonRepository = (function () {
     return pokemonList.push(pokemon);
   }
 
-  //Function to add pokemon names
-
   function addListItem(pokemon) {
+    let pokemonList = $(".pokemon-list");
     let listGroup = $(
-      '<div class = " col-xs-12  list-group  col-md-3  "></div>'
+      '<div id="list" class = " col-xs-12  list-group  col-md-3  "></div>'
     );
-
     let button = $(
-      '<button type = "button" class = " pokemon-name list-group-item list-group-action text-capitalize " data-toggle = "modal" data-target = "#modal-container">' +
+      '<button type = "button"  class = " pokemon-name list-group-item list-group-action text-capitalize " data-toggle = "modal" data-target = "#modal-container">' +
         pokemon.name +
         "</button>"
     );
-    $(listGroup).append(button);
-    $(row).append(listGroup);
-    $(container).append(row);
-    $(button).on("click", function () {
+    listGroup.append(button);
+    pokemonList.append(listGroup);
+    button.on("click", function (event) {
       showDetails(pokemon);
     });
   }
@@ -183,3 +180,22 @@ pokemonRepository.loadList().then(function () {
     pokemonRepository.addListItem(pokemon);
   });
 });
+
+function myFunction() {
+  let input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("myUL");
+  li = ul.querySelectorAll("#list");
+
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("button")[0];
+    console.log(a.innerText);
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+}
